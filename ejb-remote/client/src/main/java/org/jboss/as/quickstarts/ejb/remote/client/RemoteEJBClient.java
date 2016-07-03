@@ -46,19 +46,25 @@ public class RemoteEJBClient {
      *
      * @throws NamingException
      */
-    private static void invokeStatelessBean() throws NamingException {
+    private static void invokeStatelessBean() throws NamingException, InterruptedException {
         // Let's lookup the remote stateless calculator
         final RemoteCalculator statelessRemoteCalculator = lookupRemoteStatelessCalculator();
-        System.out.println("Obtained a remote stateless calculator for invocation");
-        // invoke on the remote calculator
-        int a = 204;
-        int b = 340;
-        System.out.println("Adding " + a + " and " + b + " via the remote stateless calculator deployed on the server");
-        int sum = statelessRemoteCalculator.add(a, b);
-        System.out.println("Remote calculator returned sum = " + sum);
-        if (sum != a + b) {
-            throw new RuntimeException("Remote stateless calculator returned an incorrect sum " + sum + " ,expected sum was "
-                + (a + b));
+        for (int i = 0; i < 1000; i++) {
+
+
+            System.out.println("Obtained a remote stateless calculator for invocation");
+            // invoke on the remote calculator
+            int a = 204;
+            int b = 340;
+            System.out.println("Adding " + a + " and " + b + " via the remote stateless calculator deployed on the server");
+            int sum = statelessRemoteCalculator.add(a, b);
+            System.out.println("Remote calculator returned sum = " + sum);
+            if (sum != a + b) {
+                throw new RuntimeException("Remote stateless calculator returned an incorrect sum " + sum + " ,expected sum was "
+                        + (a + b));
+            }
+
+            Thread.sleep(1000);
         }
         // try one more invocation, this time for subtraction
         int num1 = 3434;

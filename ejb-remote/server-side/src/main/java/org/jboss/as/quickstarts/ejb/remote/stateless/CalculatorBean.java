@@ -16,6 +16,8 @@
  */
 package org.jboss.as.quickstarts.ejb.remote.stateless;
 
+import org.jboss.ejb3.annotation.Clustered;
+
 import javax.ejb.Remote;
 import javax.ejb.Stateless;
 
@@ -23,6 +25,7 @@ import javax.ejb.Stateless;
  * @author Jaikiran Pai
  */
 @Stateless
+@Clustered
 @Remote(RemoteCalculator.class)
 public class CalculatorBean implements RemoteCalculator {
 
